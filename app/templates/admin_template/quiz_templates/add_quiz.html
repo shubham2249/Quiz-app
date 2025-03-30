@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block title %}Add Quiz for {{ chapter.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center"> Add Quiz for <strong>{{ chapter.name }}</strong></h1>
+
+    <div class="card shadow-sm p-4">
+        <form method="post">
+            {{ form.hidden_tag() }}
+
+            <!-- Quiz Name -->
+            <div class="mb-3">
+                {{ form.name.label(class="form-label fw-bold") }}
+                {{ form.name(class="form-control") }}
+                {% if form.name.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.name.errors %}
+                            <div> {{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+
+            <div class="mb-3">
+                {{ form.date_of_quiz.label(class="form-label fw-bold") }}
+                {{ form.date_of_quiz(class="form-control") }}
+                {% if form.date_of_quiz.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.date_of_quiz.errors %}
+                            <div> {{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.time_duration.label(class="form-label fw-bold") }}
+                {{ form.time_duration(class="form-control") }}
+                {% if form.time_duration.errors %}
+                    <div class="text-danger small mt-1">
+                        {% for error in form.time_duration.errors %}
+                            <div> {{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="d-grid">
+                {{ form.submit(class="btn btn-success") }}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block head %}
+{{ super() }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    .dashboard-container {
+        padding: 20px;
+    }
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+        padding: 20px;
+    }
+    .page-title {
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .chart-container {
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h1 class="page-title text-center">📊 Admin Dashboard</h1>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h3 class="mb-3">Average Scores</h3>
+                    <div class="chart-container">
+                        <canvas id="averageScoresChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h3 class="mb-3">Completion Rates</h3>
+                    <div class="chart-container">
+                        <canvas id="completionRatesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const quizNames = {{ quiz_names | tojson }};
+        const averageScores = {{ average_scores | tojson }};
+        const completionRates = {{ completion_rates | tojson }};
+
+        new Chart(document.getElementById("averageScoresChart"), {
+            type: "bar",
+            data: {
+                labels: quizNames,
+                datasets: [{
+                    label: "Average Score",
+                    data: averageScores,
+                    backgroundColor: "rgba(75, 192, 192, 0.6)",
+                    borderColor: "rgba(75, 192, 192, 1)",
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        new Chart(document.getElementById("completionRatesChart"), {
+            type: "pie",
+            data: {
+                labels: quizNames,
+                datasets: [{
+                    label: "Completion Rate",
+                    data: completionRates,
+                    backgroundColor: ["#ff6384", "#36a2eb", "#ffcd56", "#4bc0c0", "#9966ff"],
+                    hoverOffset: 4
+                }]
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,53 @@
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 56px; /* Adjust based on navbar height */
+    left: 0;
+    background-color: #343a40;
+    padding: 15px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar Header */
+.sidebar-header {
+    color: white;
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Sidebar Links */
+.nav-link {
+    color: white;
+    font-size: 1rem;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+    background-color: #495057;
+}
+
+/* Push main content when sidebar is present */
+.main-content {
+    margin-left: 260px; /* Adjust based on sidebar width */
+    padding: 20px;
+}
+
+/* Responsive Sidebar */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .main-content {
+        margin-left: 0;
+    }
+}

@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}Add Question for {{ quiz.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center"> Add Question for <strong>{{ quiz.name }}</strong></h1>
+
+    <form method="post" class="p-4 shadow rounded bg-light">
+        {{ form.hidden_tag() }}
+
+
+        <div class="mb-3">
+            {{ form.question_statement.label(class="form-label fw-bold") }}
+            {{ form.question_statement(class="form-control") }}
+            {% if form.question_statement.errors %}
+            <div class="text-danger mt-2">
+                {% for error in form.question_statement.errors %}
+                <small> {{ error }}</small><br>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                {{ form.option1.label(class="form-label fw-bold") }}
+                {{ form.option1(class="form-control") }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.option2.label(class="form-label fw-bold") }}
+                {{ form.option2(class="form-control") }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.option3.label(class="form-label fw-bold") }}
+                {{ form.option3(class="form-control") }}
+            </div>
+            <div class="col-md-6 mb-3">
+                {{ form.option4.label(class="form-label fw-bold") }}
+                {{ form.option4(class="form-control") }}
+            </div>
+        </div>
+
+
+        <div class="mb-3">
+            {{ form.correct_option.label(class="form-label fw-bold") }}
+            {{ form.correct_option(class="form-select") }}
+            {% if form.correct_option.errors %}
+            <div class="text-danger mt-2">
+                {% for error in form.correct_option.errors %}
+                <small> {{ error }}</small><br>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="d-grid">
+            {{ form.submit(class="btn btn-success btn-lg") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

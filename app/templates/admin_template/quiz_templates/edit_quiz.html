@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit Quiz for {{ chapter.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Edit Quiz for <strong>{{ chapter.name }}</strong></h1>
+
+    <div class="card shadow p-4 mt-3">
+        <form method="post">
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                {{ form.name.label(class_="form-label fw-bold") }}
+                {{ form.name(class_="form-control") }}
+                {% if form.name.errors %}
+                <div class="alert alert-danger mt-2 p-2">
+                    {% for error in form.name.errors %}
+                    <small> {{ error }}</small><br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.date_of_quiz.label(class_="form-label fw-bold") }}
+                {{ form.date_of_quiz(class_="form-control") }}
+                {% if form.date_of_quiz.errors %}
+                <div class="alert alert-danger mt-2 p-2">
+                    {% for error in form.date_of_quiz.errors %}
+                    <small> {{ error }}</small><br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                {{ form.time_duration.label(class_="form-label fw-bold") }}
+                {{ form.time_duration(class_="form-control") }}
+                {% if form.time_duration.errors %}
+                <div class="alert alert-danger mt-2 p-2">
+                    {% for error in form.time_duration.errors %}
+                    <small> {{ error }}</small><br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="d-grid">
+                {{ form.submit(class_="btn btn-primary btn-lg") }}
+            </div>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

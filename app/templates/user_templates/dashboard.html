@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% block title %}User Dashboard{% endblock %}
+
+
+{% block content %}
+<h1 class="page-title">User Dashboard</h1>
+
+<section class="mb-4">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="mb-3">Your Details</h3>
+                    <div class="detail-item">
+                        <strong class="detail-key">Username:</strong>
+                        <span class="detail-value">{{ current_user.username }}</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <strong class="detail-key">Full Name:</strong>
+                        <span class="detail-value">{{ current_user.fullname }}</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <strong class="detail-key">Qualification:</strong>
+                        <span class="detail-value">{{ current_user.qualification }}</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <strong class="detail-key">DOB:</strong>
+                        <span class="detail-value">{{ current_user.dob }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="mb-3">Progress Summary</h3>
+                    <div class="detail-item">
+                        <strong class="detail-key">Total Attempted Quizzes:</strong>
+                        <span class="detail-value">{{ total_attempted_quizzes }}</span>
+                    </div>
+
+                    <div class="detail-item">
+                        <strong class="detail-key">Average Score:</strong>
+                        <span class="detail-value">{{ average_score|round(2) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mb-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-3">Quiz History</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Quiz Name</th>
+                            <th>Attempted Time</th>
+                            <th>Total Scored</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for score in scores %}
+                        <tr>
+                            <td>{{ score.quiz.name }}</td>
+                            <td>{{ score.time_stamp_of_attempt.strftime("%Y-%m-%d %H:%M") }}</td>
+                            <td>{{ score.total_scored }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">No quiz history available.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

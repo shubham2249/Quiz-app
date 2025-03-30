@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Quiz App{% endblock %}</title>
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+</head>
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('home') }}">Quiz App</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    {% if current_user.is_authenticated %}
+    <aside class="sidebar">
+        <div class="sidebar-header"> Menu</div>
+        <ul class="nav flex-column">
+            {% if current_user.is_admin %}
+            <li class="nav-item">
+                <a href="{{ url_for('admin.admin_dashboard') }}" class="nav-link"> Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('admin.manage_subjects') }}" class="nav-link"> Manage Subjects</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('admin.manage_users') }}" class="nav-link"> Manage Users</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a href="{{ url_for('users.user_dashboard') }}" class="nav-link"> Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('users.leaderboard') }}" class="nav-link"> Leaderboard</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url_for('users.select_quiz') }}" class="nav-link"> Select Quiz</a>
+            </li>
+            {% endif %}
+        </ul>
+    </aside>
+    {% endif %}
+
+
+    <div class="main-content">
+        <div class="container mt-3">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <div class="container mt-4">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

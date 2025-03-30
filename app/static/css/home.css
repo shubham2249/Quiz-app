@@ -1,0 +1,27 @@
+/* Centered Content */
+.container {
+    max-width: 800px;
+}
+
+/* Home Page Title */
+h1 {
+    font-size: 2rem;
+}
+
+/* Buttons */
+.btn-lg {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+}
+
+/* Feature Icons */
+.fa-3x {
+    margin-bottom: 10px;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+}

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block title %}Attempt Quiz: {{ quiz.name }}{% endblock %}
+
+{% block content %}
+<h1 class="page-title text-center">{{ quiz.name }}</h1>
+
+{% if quiz.time_duration > 0 %}
+<div class="text-center mb-3">
+    <span id="timer" class="quiz-timer badge bg-danger fs-5 p-2">00:00</span>
+</div>
+{% endif %}
+
+<div class="card shadow-sm p-4">
+    <form id="quizForm" method="POST">
+        {% for question in questions %}
+        <div class="quiz-question mb-4">
+            <h5 class="fw-bold text-primary">Question #{{ loop.index }}</h5>
+            <p class="question-statement">{{ question.question_statement }}</p>
+            <div class="quiz-options">
+                {% for option in [question.option1, question.option2, question.option3, question.option4] %}
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="{{ loop.index }}" required>
+                    <label class="form-check-label">{{ option }}</label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary w-100">Submit Quiz</button>
+    </form>
+</div>
+
+<script>
+    const quizDuration = parseInt("{{ quiz.time_duration }}");
+    if (quizDuration > 0) {
+        let timeLeft = quizDuration;
+
+        function updateTimer() {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById("timer").textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(timeInterval);
+                alert("Time's up! Your quiz will be submitted automatically.");
+                document.getElementById("quizForm").submit();
+            } else {
+                timeLeft--;
+            }
+        }
+
+        const timeInterval = setInterval(updateTimer, 1000);
+    }
+</script>
+
+{% endblock %}

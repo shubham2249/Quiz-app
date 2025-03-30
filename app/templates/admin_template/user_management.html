@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}Manage Users{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title text-center my-4">Manage Users</h1>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Full Name</th>
+                    <th>Qualification</th>
+                    <th>Date of Birth</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                {% if user.username != "admin12@quiz.com" %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.fullname }}</td>
+                    <td>{{ user.qualification }}</td>
+                    <td>{{ user.dob }}</td>
+                    <td>
+                        {% if user.is_active %}
+                            <span style="color: green;">Active</span>
+                        {% else %}
+                            <span style="color: red;">Inactive</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('admin.toggle_user', user_id=user.id) }}" 
+                           class="btn btn-sm {% if user.is_active %}btn-danger{% else %}btn-success{% endif %}">
+                           {% if user.is_active %}Deactivate{% else %}Activate{% endif %}
+                        </a>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
